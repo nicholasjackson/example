@@ -1,0 +1,5 @@
+---
+example:
+  settings:
+    environment: dev
+    

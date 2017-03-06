@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  example:
+    image: example
+    ports:
+      - "::8001"
+    environment:
+      - "CONSUL=consul:8500"
+    links:
+      - syslog:syslog
+  registrator:
+    image: 'gliderlabs/registrator:latest'
+    command: '-internal -tags=dev consul://consul:8500'
+    volumes:
+      - '/var/run/docker.sock:/tmp/docker.sock'
+  syslog:
+    image: 'factorish/syslog'
+    command: '-t udp'
+    environment:
+      - "SERVICE_514_NAME=syslog-514"
